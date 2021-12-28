@@ -11,44 +11,14 @@ wordDict = "dict.txt"
 answerDict = "dict.txt"
 
 
-def checkFiles():
+def checkFiles(file):
 	try:
-		f = open(answerDict, "r", encoding="utf8")
+		f = open(file, "r", encoding="utf8")
 		f.close()
 	except FileNotFoundError:
 		print("Error: {} is missing. Ensure it is in the same folder as wordle.exe, then restart".format(answerDict))
 		sleep(10)
 		exit()
-	try:
-		f = open(wordDict, "r", encoding="utf8")
-		f.close()
-	except FileNotFoundError:
-		print("Error: {} is missing. Ensure it is in the same folder as wordle.exe, then restart".format(wordDict))
-		sleep(10)
-		exit()
-
-
-def intro():
-	print("[green]Max's Bad Wordle Clone v1.0[/]")
-
-
-def help():
-	print(
-		"\nBased on Wordle from [link=https://www.powerlanguage.co.uk/wordle/]https://www.powerlanguage.co.uk/wordle/[/link].")
-	print("\n\tHOW TO PLAY")
-	print("Guess the WORDLE in any number of tries.")
-	print(
-		"After each guess, the color of the tiles will change to show how close your guess was to the word. Example: ")
-	print("[green]W[/][yellow]EA[/][green]R[/green][red]Y[/red]")
-	print("The letters W and R are in the word and in the correct spots.")
-	print("The letters E and A are in the word but in the wrong spots.")
-	print("The letter Y is not in the word in any spot.")
-	print("\n\tHOW TO USE")
-	print("You can navigate this software by entering commands.")
-	print("For menu options, type the number next to the option you'd like to select and press ENTER.")
-	print("To make a word guess in-game, simply type in the word and press ENTER.")
-	print("You can return to the main menu by typing MENU from anywhere in the program.")
-	print("Report bugs or feedback to Max!")
 
 
 # generate a new word by reading the dictionary of eligible words
@@ -104,6 +74,7 @@ def checkAndColor(guess, correct, keyboard):
 	return result
 
 
+# for printing the keyboard
 def reformat(dictionary):
 	qwerty = ["\t", 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', "\n\t", 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K',
 	          'L', "\n\t", 'Z', 'X', 'C', 'V', 'B', 'N', 'M']
@@ -210,8 +181,8 @@ def multiMenu():
 					token = (encrypt(words))
 					print("[white]" + token + "[/]")
 					clipboard.copy(token)
-					c = input("Play now? y/n: ")
-					if c.lower() == "y":
+					play = input("Play now? y/n: ")
+					if play.lower() == "y":
 						multiPlay(words)
 					else:
 						main()
@@ -242,6 +213,29 @@ def multiPlay(words):
 		game(wordlist[i], keyboard, 1, guesses)
 
 
+def intro():
+	print("[green]Max's Bad Wordle Clone v1.0[/]")
+
+
+def printHelp():
+	print(
+		"\nBased on Wordle from [link=https://www.powerlanguage.co.uk/wordle/]https://www.powerlanguage.co.uk/wordle/[/link].")
+	print("\n\tHOW TO PLAY")
+	print("Guess the WORDLE in any number of tries.")
+	print(
+		"After each guess, the color of the tiles will change to show how close your guess was to the word. Example: ")
+	print("[green]W[/][yellow]EA[/][green]R[/green][red]Y[/red]")
+	print("The letters W and R are in the word and in the correct spots.")
+	print("The letters E and A are in the word but in the wrong spots.")
+	print("The letter Y is not in the word in any spot.")
+	print("\n\tHOW TO USE")
+	print("You can navigate this software by entering commands.")
+	print("For menu options, type the number next to the option you'd like to select and press ENTER.")
+	print("To make a word guess in-game, simply type in the word and press ENTER.")
+	print("You can return to the main menu by typing MENU from anywhere in the program.")
+	print("Report bugs or feedback to Max!")
+
+
 def initialize():
 	print("Type MENU at any time to return to the menu.")
 	word = randomWord()
@@ -250,6 +244,7 @@ def initialize():
 	game(word, keyboard, 1, guesses)
 
 
+'''
 def getColor(color, cb):
 	print("this isn't done yet sorry")
 	main()
@@ -259,19 +254,21 @@ def options():
 	print("this isn't done yet sorry")
 	print("[1] Colorblind settings\n[2] Back")
 	main()
+'''
 
 
 def main():
-	checkFiles()
+	checkFiles(wordDict)
+	checkFiles(answerDict)
 	print("\nMAIN MENU")
 	menu = input("[1] Play now\n[2] Custom game setup (multiplayer)\n[3] Help\n[4] Exit\n")
 	if menu == "1":
 		initialize()
-	if menu == "2":
+	elif menu == "2":
 		multiMenu()
-	if menu == "3":
-		help()
-	if menu == "4":
+	elif menu == "3":
+		printHelp()
+	elif menu == "4":
 		exit()
 	else:
 		print("\nTo select a menu option, type only the number and press ENTER.")
