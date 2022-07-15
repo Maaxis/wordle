@@ -1,15 +1,23 @@
 import random
-import clipboard
-from rich import print
-from cryptography.fernet import Fernet
-import cryptography
 from time import sleep
+
+import clipboard
+import cryptography
+from cryptography.fernet import Fernet
+from rich import print
 
 key = b'QKeYs7FIni2fKtpui16fCMxAWCy6SRvtuh5mFdGnrms='
 fernet = Fernet(key)
 wordDict = "dict.txt"
 answerDict = "dict.txt"
 
+with open("settings.txt", "r", encoding="utf8") as f:
+	if "easyMode=1" in f:
+		answerDict = "dict.txt"
+		print("Easy mode is enabled.")
+	else:
+		answerDict = "dictElig.txt"
+		print("Easy mode is disabled.")
 
 def checkFiles(file):
 	try:
